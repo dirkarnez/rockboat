@@ -17,6 +17,7 @@ jobs:
         uses: nekocodeX/GitHub-Action-Ahk2Exe@main
         with:
           in: main.ahk
+          out: ${{ github.event.repository.name }}
       
       - name: Archive Release
         uses: thedoctor0/zip-release@master
