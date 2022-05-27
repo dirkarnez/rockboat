@@ -15,8 +15,6 @@ jobs:
       
       - name: Ahk2Exe
         uses: nekocodeX/GitHub-Action-Ahk2Exe@main
-        env:
-          GIT_PW: ${{ secrets.GIT_PW }}
         with:
           in: main.ahk
           out: ${{ github.event.repository.name }}
