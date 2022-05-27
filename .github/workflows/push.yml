@@ -1,0 +1,33 @@
+name: ahk2exe-build-actions-workflow
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      targetZip: ${{ github.event.repository.name }}-${{ github.ref_name }}.zip
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Ahk2Exe
+        uses: nekocodeX/GitHub-Action-Ahk2Exe@main
+        with:
+          in: main.ahk
+      
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          path: ${{ github.event.repository.name }}.exe
+          filename: "${{ env.targetZip }}"
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ env.targetZip }}"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
